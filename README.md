@@ -6,3 +6,14 @@ Project code: BUS009
 Supervisor: Erwann Sbai
 </br >
 Author: Jesse Philip Chen
+
+Reproducibility is a challenge in many fields. Economics is not an exception. We want to check if results are correct, and reproduce methods using a different data set. At the same time, there is also an increasing demand for using free open-source languages.
+
+Student will use freely available programming languages (e.g. Julia, R or Python) to reproduce some reference papers related to Empirical Economics and Econometrics. Of particular interest would be empirical game theoretical models (auctions, discrete demand models), but other empirical studies could be considered. The output should be publicly available to the wider community.
+
+This project is valuable for different reasons. The student will:
+<ul>
+  <li>improve their knowledge of econometric methods</li>
+  <li>improve their numerical and coding skills</li>
+  <li>contribute to the dissemination of knowledge in a free and transparent way.</li>
+</ul>
