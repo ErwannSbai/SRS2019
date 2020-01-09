@@ -14,6 +14,12 @@ fatalities = CSV.read("C:\\Users\\jpche\\AppData\\Local\\JuliaPro-1.2.0-1\\fatal
 fatalities.fatality_rate = fatalities.fatal ./ fatalities.pop * 10000 #define a new column 'fatality_rate' in the DataFrame 'fatalities' which takes, from each row, the total number of fatalities from the variable 'fatal',  divides it by the total population from the variable 'pop', and multiplies the value by 10,000 to obtain the fatality rate per 10,000 people in a given state and time period
 fatalities.state = categorical(fatalities.state) #redefine the column 'state' in the DataFrame 'fatalities' as a categorical variable by taking the 'state' column of given states and converting it from an ordinary Array into a CategoricalArray
 fatalities.year = categorical(fatalities.year) #redefine the column 'year' in the DataFrame 'fatalities' as a categorical variable by taking the 'year' column of given years and converting it from an ordinary Array into a CategoricalArray
+fatalities.year1983 = fatalities.year .== 1983
+fatalities.year1984 = fatalities.year .== 1984
+fatalities.year1985 = fatalities.year .== 1985
+fatalities.year1986 = fatalities.year .== 1986
+fatalities.year1987 = fatalities.year .== 1987
+fatalities.year1988 = fatalities.year .== 1988
 fatalities.drinkagec = categorical(cut(fatalities.drinkage, 18:22, extend = true)) #define a new column 'drinkagec' in the DataFrame 'fatalities' as a CategoricalArray which takes the legal drinking age of a state from the variable 'drinkage' and categorises it as the range [18, 19), [19, 20), [20, 21), or [21, 22]
 fatalities.drinkagec1819 = fatalities.drinkagec .== "[18, 19)" #define a new column 'drinkeagec1819' in the DataFrame 'fatalities' as a dummy variable which takes the categorical range of the legal drinking age of a state and returns 1 if the range is [18, 19) and 0 otherwise
 fatalities.drinkagec1920 = fatalities.drinkagec .== "[19, 20)" #define a new column 'drinkeagec1920' in the DataFrame 'fatalities' as a dummy variable which takes the categorical range of the legal drinking age of a state and returns 1 if the range is [19, 20) and 0 otherwise
@@ -80,104 +86,74 @@ regtable( #from RegressionTables.jl; function produces a regression table
             )
 )
 
-function f_test(unrestricted, restricted, n, q, p)
+function robust_f_test(reg_model, restricted_variable_array, reg_model_name)
 
-    f_statistic = ((restricted.rss - unrestricted.rss) / p) / ((unrestricted.rss) / (n - q - 1))
+    num_restrictions = length(restricted_variable_array)
+    num_coef = length(reg_model.coef)
 
-    println("F-statistic: " * string(f_statistic))
+    restriction_matrix = zeros(num_restrictions, num_coef)
 
-    f_dist = FDist(p, n - q - 1)
+    for i in 1:num_restrictions
+        restricted_variable_index = findall(x -> x == restricted_variable_array[i], reg_model.coefnames)[1]
 
-    f_statistic_p_value = ccdf(f_dist, f_statistic)
+        restriction_matrix[i, restricted_variable_index] = 1
 
-    println("F-statistic p-value: " * string(f_statistic_p_value))
+    end
+
+    restricted_variable_coef_matrix = restriction_matrix * reg_model.coef
+
+
+    f_statistic = transpose(restricted_variable_coef_matrix) * inv(restriction_matrix * reg_model.vcov * transpose(restriction_matrix)) * restricted_variable_coef_matrix / num_restrictions
+
+    f_dist = FDist(num_restrictions, Inf64)
+
+    f_statistic_p_value = 1 - cdf(f_dist, f_statistic)
+
+    println("Robust F-Test on the model " * string(reg_model_name) * " with restrictions " * string(restricted_variable_array))
+    println("F-Statistic: " * string(f_statistic))
+    println("F-Statistic P-Value: " * string(f_statistic_p_value))
+    println()
 
 end
 
-fatalities_mod_3_no_year = reg( #from FixedEffectModels; initialise a FixedEffectModel and define it as fatalities_mod_3
+fatalities_mod_3_year_dummy = reg( #from FixedEffectModels; initialise a FixedEffectModel and define it as fatalities_mod_3
                         fatalities, #pass the DataFrame 'fatalities' as the dataset to be used in fatalities_mod_3
-                        @formula(fatality_rate ~ beertax + fe(state)), #pass the regression formula consisting of the dependent variable 'fatality_rate', the exogenous variable 'beertax', and the fixed effect variables 'state' and 'year'
+                        @formula(fatality_rate ~ beertax + fe(state) + year1983 + year1984 + year1985 + year1986 + year1987 + year1988), #pass the regression formula consisting of the dependent variable 'fatality_rate', the exogenous variable 'beertax', and the fixed effect variables 'state' and 'year'
                         Vcov.cluster(:state) #set the standard error Vcov to be clustered by the variable 'state'
 )
 
-f_test(fatalities_mod_3, fatalities_mod_3_no_year, 336, 54, 6)
-
-fatalities_mod_4_no_year = reg( #from FixedEffectModels; initialise a FixedEffectModel and define it as fatalities_mod_4
+fatalities_mod_4_year_dummy = reg( #from FixedEffectModels; initialise a FixedEffectModel and define it as fatalities_mod_4
                         fatalities, #pass the DataFrame 'fatalities' as the dataset to be used in fatalities_mod_4
-                        @formula(fatality_rate ~ beertax + punish + miles + unemp + log(income) + drinkagec1819 + drinkagec1920 + drinkagec2021 + fe(state)), #pass the regression formula consisting of the dependent variable 'fatality_rate', the exogenous variables 'beertax', 'punish', 'miles', 'unemp' and 'log(income)', the exogenous dummy variables 'drinkagec1819', 'drinkagec1920' and 'drinkagec2021', and the fixed effect variables 'state' and 'year'
+                        @formula(fatality_rate ~ beertax + punish + miles + unemp + log(income) + drinkagec1819 + drinkagec1920 + drinkagec2021 + fe(state) + year1983 + year1984 + year1985 + year1986 + year1987 + year1988), #pass the regression formula consisting of the dependent variable 'fatality_rate', the exogenous variables 'beertax', 'punish', 'miles', 'unemp' and 'log(income)', the exogenous dummy variables 'drinkagec1819', 'drinkagec1920' and 'drinkagec2021', and the fixed effect variables 'state' and 'year'
                         Vcov.cluster(:state) #set the standard error Vcov to be clustered by the variable 'state'
 )
 
-f_test(fatalities_mod_4, fatalities_mod_4_no_year, 336, 61, 6)
-
-fatalities_mod_4_no_drinkagec = reg( #from FixedEffectModels; initialise a FixedEffectModel and define it as fatalities_mod_4
-                        fatalities, #pass the DataFrame 'fatalities' as the dataset to be used in fatalities_mod_4
-                        @formula(fatality_rate ~ beertax + punish + miles + unemp + log(income) + fe(state) + fe(year)), #pass the regression formula consisting of the dependent variable 'fatality_rate', the exogenous variables 'beertax', 'punish', 'miles', 'unemp' and 'log(income)', the exogenous dummy variables 'drinkagec1819', 'drinkagec1920' and 'drinkagec2021', and the fixed effect variables 'state' and 'year'
-                        Vcov.cluster(:state) #set the standard error Vcov to be clustered by the variable 'state'
-)
-
-f_test(fatalities_mod_4, fatalities_mod_4_no_drinkagec, 336, 61, 3)
-
-fatalities_mod_4_no_unemp_and_income = reg( #from FixedEffectModels; initialise a FixedEffectModel and define it as fatalities_mod_4
-                        fatalities, #pass the DataFrame 'fatalities' as the dataset to be used in fatalities_mod_4
-                        @formula(fatality_rate ~ beertax + punish + miles + drinkagec1819 + drinkagec1920 + drinkagec2021 + fe(state) + fe(year)), #pass the regression formula consisting of the dependent variable 'fatality_rate', the exogenous variables 'beertax', 'punish', 'miles', 'unemp' and 'log(income)', the exogenous dummy variables 'drinkagec1819', 'drinkagec1920' and 'drinkagec2021', and the fixed effect variables 'state' and 'year'
-                        Vcov.cluster(:state) #set the standard error Vcov to be clustered by the variable 'state'
-)
-
-f_test(fatalities_mod_4, fatalities_mod_4_no_unemp_and_income, 336, 61, 2)
-
-fatalities_mod_5_no_year = reg( #from FixedEffectModels; initialise a FixedEffectModel and define it as fatalities_mod_5
+fatalities_mod_5_year_dummy = reg( #from FixedEffectModels; initialise a FixedEffectModel and define it as fatalities_mod_5
                         fatalities, #pass the DataFrame 'fatalities' as the dataset to be used in fatalities_mod_5
-                        @formula(fatality_rate ~ beertax + punish + miles + drinkagec1819 + drinkagec1920 + drinkagec2021 + fe(state)), #pass the regression formula consisting of the dependent variable 'fatality_rate', the exogenous variables 'beertax', 'punish', 'miles', 'unemp' and 'log(income)', the exogenous dummy variables 'drinkagec1819', 'drinkagec1920' and 'drinkagec2021', and the fixed effect variables 'state' and 'year'
+                        @formula(fatality_rate ~ beertax + punish + miles + drinkagec1819 + drinkagec1920 + drinkagec2021 + fe(state) + year1983 + year1984 + year1985 + year1986 + year1987 + year1988), #pass the regression formula consisting of the dependent variable 'fatality_rate', the exogenous variables 'beertax', 'punish', 'miles', 'unemp' and 'log(income)', the exogenous dummy variables 'drinkagec1819', 'drinkagec1920' and 'drinkagec2021', and the fixed effect variables 'state' and 'year'
                         Vcov.cluster(:state) #set the standard error Vcov to be clustered by the variable 'state'
 )
 
-f_test(fatalities_mod_5, fatalities_mod_5_no_year, 336, 59, 6)
-
-fatalities_mod_5_no_drinkagec = reg( #from FixedEffectModels; initialise a FixedEffectModel and define it as fatalities_mod_5
-                        fatalities, #pass the DataFrame 'fatalities' as the dataset to be used in fatalities_mod_5
-                        @formula(fatality_rate ~ beertax + punish + miles + fe(state) + fe(year)), #pass the regression formula consisting of the dependent variable 'fatality_rate', the exogenous variables 'beertax', 'punish', 'miles', 'unemp' and 'log(income)', the exogenous dummy variables 'drinkagec1819', 'drinkagec1920' and 'drinkagec2021', and the fixed effect variables 'state' and 'year'
-                        Vcov.cluster(:state) #set the standard error Vcov to be clustered by the variable 'state'
-)
-
-f_test(fatalities_mod_5, fatalities_mod_5_no_drinkagec, 336, 59, 3)
-
-fatalities_mod_6_no_year = reg( #from FixedEffectModels; initialise a FixedEffectModel and define it as fatalities_mod_6
+fatalities_mod_6_year_dummy = reg( #from FixedEffectModels; initialise a FixedEffectModel and define it as fatalities_mod_6
                         fatalities, #pass the DataFrame 'fatalities' as the dataset to be used in fatalities_mod_6
-                        @formula(fatality_rate ~ beertax + punish + miles + unemp + log(income)  + drinkage + fe(state)), #pass the regression formula consisting of the dependent variable 'fatality_rate', the exogenous variables 'beertax', 'punish', 'miles', 'unemp', 'log(income)' and 'drinkage', and the fixed effect variables 'state' and 'year'
+                        @formula(fatality_rate ~ beertax + punish + miles + unemp + log(income)  + drinkage + fe(state) + year1983 + year1984 + year1985 + year1986 + year1987 + year1988), #pass the regression formula consisting of the dependent variable 'fatality_rate', the exogenous variables 'beertax', 'punish', 'miles', 'unemp', 'log(income)' and 'drinkage', and the fixed effect variables 'state' and 'year'
                         Vcov.cluster(:state) #set the standard error Vcov to be clustered by the variable 'state'
 )
 
-f_test(fatalities_mod_6, fatalities_mod_6_no_year, 336, 59, 6)
-
-fatalities_mod_6_no_unemp_and_income = reg( #from FixedEffectModels; initialise a FixedEffectModel and define it as fatalities_mod_6
-                        fatalities, #pass the DataFrame 'fatalities' as the dataset to be used in fatalities_mod_6
-                        @formula(fatality_rate ~ beertax + punish + miles + drinkage + fe(state) + fe(year)), #pass the regression formula consisting of the dependent variable 'fatality_rate', the exogenous variables 'beertax', 'punish', 'miles', 'unemp', 'log(income)' and 'drinkage', and the fixed effect variables 'state' and 'year'
-                        Vcov.cluster(:state) #set the standard error Vcov to be clustered by the variable 'state'
-)
-
-f_test(fatalities_mod_6, fatalities_mod_6_no_unemp_and_income, 336, 59, 2)
-
-fatalities_mod_7_no_year = reg( #from FixedEffectModels; initialise a FixedEffectModel and define it as fatalities_mod_7
+fatalities_mod_7_year_dummy = reg( #from FixedEffectModels; initialise a FixedEffectModel and define it as fatalities_mod_7
                         fatalities_1982_and_1988, #pass the DataFrame 'fatalities_1982_and_1988' as the dataset to be used in fatalities_mod_7
-                        @formula(fatality_rate ~ beertax + punish + miles + unemp + log(income) + drinkagec1819 + drinkagec1920 + drinkagec2021 + fe(state)), #pass the regression formula consisting of the dependent variable 'fatality_rate', the exogenous variables 'beertax', 'punish', 'miles', 'unemp' and 'log(income)', the exogenous dummy variables 'drinkagec1819', 'drinkagec1920' and 'drinkagec2021', and the fixed effect variables 'state' and 'year'
+                        @formula(fatality_rate ~ beertax + punish + miles + unemp + log(income) + drinkagec1819 + drinkagec1920 + drinkagec2021 + fe(state) + year1988), #pass the regression formula consisting of the dependent variable 'fatality_rate', the exogenous variables 'beertax', 'punish', 'miles', 'unemp' and 'log(income)', the exogenous dummy variables 'drinkagec1819', 'drinkagec1920' and 'drinkagec2021', and the fixed effect variables 'state' and 'year'
                         Vcov.cluster(:state) #set the standard error Vcov to be clustered by the variable 'state'
 )
 
-f_test(fatalities_mod_7, fatalities_mod_7_no_year, 336, 61, 6)
-
-fatalities_mod_7_no_drinkagec = reg( #from FixedEffectModels; initialise a FixedEffectModel and define it as fatalities_mod_7
-                        fatalities_1982_and_1988, #pass the DataFrame 'fatalities_1982_and_1988' as the dataset to be used in fatalities_mod_7
-                        @formula(fatality_rate ~ beertax + punish + miles + unemp + log(income) + fe(state) + fe(year)), #pass the regression formula consisting of the dependent variable 'fatality_rate', the exogenous variables 'beertax', 'punish', 'miles', 'unemp' and 'log(income)', the exogenous dummy variables 'drinkagec1819', 'drinkagec1920' and 'drinkagec2021', and the fixed effect variables 'state' and 'year'
-                        Vcov.cluster(:state) #set the standard error Vcov to be clustered by the variable 'state'
-)
-
-f_test(fatalities_mod_7, fatalities_mod_7_no_drinkagec, 336, 61, 3)
-
-fatalities_mod_7_no_unemp_and_income = reg( #from FixedEffectModels; initialise a FixedEffectModel and define it as fatalities_mod_7
-                        fatalities_1982_and_1988, #pass the DataFrame 'fatalities_1982_and_1988' as the dataset to be used in fatalities_mod_7
-                        @formula(fatality_rate ~ beertax + punish + miles + drinkagec1819 + drinkagec1920 + drinkagec2021 + fe(state) + fe(year)), #pass the regression formula consisting of the dependent variable 'fatality_rate', the exogenous variables 'beertax', 'punish', 'miles', 'unemp' and 'log(income)', the exogenous dummy variables 'drinkagec1819', 'drinkagec1920' and 'drinkagec2021', and the fixed effect variables 'state' and 'year'
-                        Vcov.cluster(:state) #set the standard error Vcov to be clustered by the variable 'state'
-)
-
-f_test(fatalities_mod_7, fatalities_mod_7_no_unemp_and_income, 336, 61, 2)
+robust_f_test(fatalities_mod_3_year_dummy, ["year1983", "year1984", "year1985", "year1986", "year1987", "year1988"], "fatalities_mod_3_year_dummy")
+robust_f_test(fatalities_mod_4_year_dummy, ["year1983", "year1984", "year1985", "year1986", "year1987", "year1988"], "fatalities_mod_4_year_dummy")
+robust_f_test(fatalities_mod_4, ["drinkagec1819", "drinkagec1920", "drinkagec2021"], "fatalities_mod_4")
+robust_f_test(fatalities_mod_4, ["log(income)", "unemp"], "fatalities_mod_4")
+robust_f_test(fatalities_mod_5_year_dummy, ["year1983", "year1984", "year1985", "year1986", "year1987", "year1988"], "fatalities_mod_5_year_dummy")
+robust_f_test(fatalities_mod_5, ["drinkagec1819", "drinkagec1920", "drinkagec2021"], "fatalities_mod_5")
+robust_f_test(fatalities_mod_6_year_dummy, ["year1983", "year1984", "year1985", "year1986", "year1987", "year1988"], "fatalities_mod_6_year_dummy")
+robust_f_test(fatalities_mod_6, ["log(income)", "unemp"], "fatalities_mod_6")
+robust_f_test(fatalities_mod_7_year_dummy, ["year1988"], "fatalities_mod_7_year_dummy")
+robust_f_test(fatalities_mod_7, ["drinkagec1819", "drinkagec1920", "drinkagec2021"], "fatalities_mod_7")
+robust_f_test(fatalities_mod_7, ["log(income)", "unemp"], "fatalities_mod_7")
