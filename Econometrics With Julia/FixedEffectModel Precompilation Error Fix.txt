@@ -1,0 +1,288 @@
+Starting Julia...
+               _
+   _       _ _(_)_     |  Documentation: https://docs.julialang.org
+  (_)     | (_) (_)    |
+   _ _   _| |_  __ _   |  Type "?" for help, "]?" for Pkg help.
+  | | | | | | |/ _` |  |
+  | | |_| | | | (_| |  |  Version 1.2.0 (2019-08-20)
+ _/ |\__'_|_|_|\__'_|  |  Official https://julialang.org/ release
+|__/                   |
+
+julia> Pkg.add("FixedEffects")
+  Updating registry at `C:\Users\jpche\.juliapro\JuliaPro_v1.2.0-1\registries\JuliaPro`
+  Updating git-repo `https://pkg.juliacomputing.com//registry/JuliaPro`
+ Resolving package versions...
+ Installed FixedEffects ────── v0.6.1
+ Installed CUDAapi ─────────── v2.0.0
+ Installed Compat ──────────── v2.2.0
+ Installed CodeTracking ────── v0.5.8
+ Installed Tokenize ────────── v0.5.7
+ Installed JuliaFormatter ──── v0.1.37
+ Installed Distances ───────── v0.8.2
+ Installed NNlib ───────────── v0.6.0
+ Installed CategoricalArrays ─ v0.7.3
+ Installed CUDAdrv ─────────── v4.0.4
+ Installed FillArrays ──────── v0.8.2
+ Installed AbstractFFTs ────── v0.4.1
+ Installed Parsers ─────────── v0.3.10
+ Installed CUDAnative ──────── v2.6.0
+ Installed DataStructures ──── v0.17.6
+ Installed Adapt ───────────── v1.0.0
+ Installed DataAPI ─────────── v1.1.0
+ Installed Missings ────────── v0.4.3
+ Installed CEnum ───────────── v0.2.0
+ Installed StatsBase ───────── v0.32.0
+ Installed SortingAlgorithms ─ v0.3.1
+ Installed CSTParser ───────── v1.1.0
+ Installed GPUArrays ───────── v2.0.0
+ Installed JuliaInterpreter ── v0.7.4
+ Installed Colors ──────────── v0.9.6
+ Installed LLVM ────────────── v1.3.2
+ Installed DocSeeker ───────── v0.3.1
+ Installed TimerOutputs ────── v0.5.3
+ Installed Widgets ─────────── v0.6.2
+ Installed StringDistances ─── v0.4.0
+ Installed MacroTools ──────── v0.5.3
+ Installed CuArrays ────────── v1.5.0
+  Updating `C:\Users\jpche\.juliapro\JuliaPro_v1.2.0-1\environments\v1.2\Project.toml`
+  [c8885935] + FixedEffects v0.6.1
+  Updating `C:\Users\jpche\.juliapro\JuliaPro_v1.2.0-1\environments\v1.2\Manifest.toml`
+  [621f4979] + AbstractFFTs v0.4.1
+  [79e6a3ab] + Adapt v1.0.0
+  [fa961155] + CEnum v0.2.0
+  [00ebfdb7] ↑ CSTParser v0.6.2 ⇒ v1.1.0
+  [3895d2a7] + CUDAapi v2.0.0
+  [c5f51814] + CUDAdrv v4.0.4
+  [be33ccc6] + CUDAnative v2.6.0
+  [324d7699] + CategoricalArrays v0.7.3
+  [da1fd8a2] ↑ CodeTracking v0.5.7 ⇒ v0.5.8
+  [5ae59095] ↑ Colors v0.9.5 ⇒ v0.9.6
+  [34da2185] ↑ Compat v2.1.0 ⇒ v2.2.0
+  [3a865a2d] + CuArrays v1.5.0
+  [9a962f9c] + DataAPI v1.1.0
+  [864edb3b] ↑ DataStructures v0.17.0 ⇒ v0.17.6
+  [b4f34e82] ↑ Distances v0.8.0 ⇒ v0.8.2
+  [33d173f1] ↑ DocSeeker v0.2.0 ⇒ v0.3.1
+  [1a297f60] + FillArrays v0.8.2
+  [c8885935] + FixedEffects v0.6.1
+  [0c68f7d7] + GPUArrays v2.0.0
+  [c8e1da08] - IterTools v1.2.0
+  [98e50ef6] ↑ JuliaFormatter v0.1.1 ⇒ v0.1.37
+  [aa1ae85d] ↑ JuliaInterpreter v0.6.1 ⇒ v0.7.4
+  [929cbde3] + LLVM v1.3.2
+  [1914dd2f] ↑ MacroTools v0.5.1 ⇒ v0.5.3
+  [e1d29d7a] + Missings v0.4.3
+  [872c559c] + NNlib v0.6.0
+  [69de0a69] ↑ Parsers v0.3.6 ⇒ v0.3.10
+  [a2af1166] + SortingAlgorithms v0.3.1
+  [2913bbd2] + StatsBase v0.32.0
+  [88034a9c] ↑ StringDistances v0.3.2 ⇒ v0.4.0
+  [a759f4b9] + TimerOutputs v0.5.3
+  [0796e94c] ↑ Tokenize v0.5.5 ⇒ v0.5.7
+  [cc8bc4a8] ↑ Widgets v0.6.1 ⇒ v0.6.2
+  [9fa8497b] + Future 
+
+julia> Pkg.add("FixedEffectModels")
+ Resolving package versions...
+ Installed RecipesBase ───────────────── v0.7.0
+ Installed IteratorInterfaceExtensions ─ v1.0.0
+ Installed Rmath ─────────────────────── v0.5.1
+ Installed QuadGK ────────────────────── v2.1.1
+ Installed Tables ────────────────────── v0.2.11
+ Installed Combinatorics ─────────────── v0.7.0
+ Installed DataValueInterfaces ───────── v1.0.0
+ Installed FixedEffectModels ─────────── v0.10.2
+ Installed ShiftedArrays ─────────────── v1.0.0
+ Installed PooledArrays ──────────────── v0.5.2
+ Installed StatsFuns ─────────────────── v0.9.1
+ Installed DataFrames ────────────────── v0.19.4
+ Installed StatsModels ───────────────── v0.6.7
+ Installed Polynomials ───────────────── v0.6.0
+ Installed TableTraits ───────────────── v1.0.0
+ Installed PDMats ────────────────────── v0.9.10
+ Installed InvertedIndices ───────────── v1.0.0
+ Installed BinDeps ───────────────────── v0.8.10
+ Installed Arpack ────────────────────── v0.3.1
+ Installed SpecialFunctions ──────────── v0.8.90
+ Installed Distributions ─────────────── v0.21.10
+  Updating `C:\Users\jpche\.juliapro\JuliaPro_v1.2.0-1\environments\v1.2\Project.toml`
+  [9d5cd8c9] + FixedEffectModels v0.10.2
+  Updating `C:\Users\jpche\.juliapro\JuliaPro_v1.2.0-1\environments\v1.2\Manifest.toml`
+  [7d9fca2a] + Arpack v0.3.1
+  [9e28174c] + BinDeps v0.8.10
+  [861a8166] + Combinatorics v0.7.0
+  [a93c6f00] + DataFrames v0.19.4
+  [e2d170a0] + DataValueInterfaces v1.0.0
+  [31c24e10] + Distributions v0.21.10
+  [9d5cd8c9] + FixedEffectModels v0.10.2
+  [41ab1584] + InvertedIndices v1.0.0
+  [82899510] + IteratorInterfaceExtensions v1.0.0
+  [90014a1f] + PDMats v0.9.10
+  [f27b6e38] + Polynomials v0.6.0
+  [2dfb63ee] + PooledArrays v0.5.2
+  [1fd47b50] + QuadGK v2.1.1
+  [3cdcf5f2] + RecipesBase v0.7.0
+  [79098fc4] + Rmath v0.5.1
+  [1277b4bf] + ShiftedArrays v1.0.0
+  [4c63d2b9] + StatsFuns v0.9.1
+  [3eaba693] + StatsModels v0.6.7
+  [3783bdb8] + TableTraits v1.0.0
+  [bd369af6] + Tables v0.2.11
+  [4607b0f0] + SuiteSparse
+  Building Rmath ───────────→ `C:\Users\jpche\.juliapro\JuliaPro_v1.2.0-1\packages\Rmath\4wt82\deps\build.log`
+  Building SpecialFunctions → `C:\Users\jpche\.juliapro\JuliaPro_v1.2.0-1\packages\SpecialFunctions\IYceU\deps\build.log`
+  Building Arpack ──────────→ `C:\Users\jpche\.juliapro\JuliaPro_v1.2.0-1\packages\Arpack\cu5By\deps\build.log`
+
+ERROR: LoadError: ArgumentError: Package CSV not found in current path:
+- Run `import Pkg; Pkg.add("CSV")` to install the CSV package.
+
+Stacktrace:
+ [1] require(::Module, ::Symbol) at .\loading.jl:876
+in expression starting at C:\Users\jpche\Desktop\New folder (2)\10.5 Panel Data.jl:1
+julia>                                                                                                                                                                                                                                                                 Pjulia> Pkg.add("CSV")
+ Resolving package versions...
+ Installed WeakRefStrings ─ v0.6.1
+ Installed ArrayLayouts ─── v0.1.5
+ Installed FilePathsBase ── v0.7.0
+ Installed LazyArrays ───── v0.14.10
+ Installed StaticArrays ─── v0.12.1
+ Installed CSV ──────────── v0.5.18
+  Updating `C:\Users\jpche\.juliapro\JuliaPro_v1.2.0-1\environments\v1.2\Project.toml`
+  Updating `C:\Users\jpche\.juliapro\JuliaPro_v1.2.0-1\environments\v1.2\Manifest.toml`
+  [4c555306] + ArrayLayouts v0.1.5
+  [336ed68f] + CSV v0.5.18
+  [48062228] + FilePathsBase v0.7.0
+  [5078a376] + LazyArrays v0.14.10
+  [90137ffa] + StaticArrays v0.12.1
+  [ea10d353] + WeakRefStrings v0.6.1
+
+[ Info: Precompiling CSV [336ed68f-0bac-5ca0-87d4-7b16caf5d00b]
+ERROR: LoadError: ArgumentError: Package DataFrames not found in current path:
+- Run `import Pkg; Pkg.add("DataFrames")` to install the DataFrames package.
+
+Stacktrace:
+ [1] require(::Module, ::Symbol) at .\loading.jl:876
+in expression starting at C:\Users\jpche\Desktop\New folder (2)\10.5 Panel Data.jl:2
+julia> 
+julia> Pkg.add("DataFrames")
+ Resolving package versions...
+  Updating `C:\Users\jpche\.juliapro\JuliaPro_v1.2.0-1\environments\v1.2\Project.toml`
+  [a93c6f00] + DataFrames v0.19.4
+  Updating `C:\Users\jpche\.juliapro\JuliaPro_v1.2.0-1\environments\v1.2\Manifest.toml`
+ [no changes]
+
+julia> Pkg.add("Query")
+ Resolving package versions...
+ Installed Query ──────────── v0.12.2
+ Installed TableShowUtils ─── v0.2.5
+ Installed DataValues ─────── v0.4.12
+ Installed TableTraitsUtils ─ v1.0.1
+ Installed QueryOperators ─── v0.9.1
+ Installed IterableTables ─── v1.0.0
+  Updating `C:\Users\jpche\.juliapro\JuliaPro_v1.2.0-1\environments\v1.2\Project.toml`
+  [1a8c2f83] + Query v0.12.2
+  Updating `C:\Users\jpche\.juliapro\JuliaPro_v1.2.0-1\environments\v1.2\Manifest.toml`
+  [e7dc6d0d] + DataValues v0.4.12
+  [1c8ee90f] + IterableTables v1.0.0
+  [1a8c2f83] + Query v0.12.2
+  [2aef5ad7] + QueryOperators v0.9.1
+  [5e66a065] + TableShowUtils v0.2.5
+  [382cd787] + TableTraitsUtils v1.0.1
+
+julia> Pkg.add("Plots")
+ Resolving package versions...
+ Installed Plots ───────── v0.28.2
+ Installed Showoff ─────── v0.3.1
+ Installed NaNMath ─────── v0.3.3
+ Installed FFMPEG ──────── v0.2.91
+ Installed PlotThemes ──── v1.0.0
+ Installed PlotUtils ───── v0.6.1
+ Installed Measures ────── v0.3.0
+ Installed IterTools ───── v1.3.0
+ Installed GeometryTypes ─ v0.7.6
+ Installed Contour ─────── v0.5.1
+ Installed GR ──────────── v0.44.90
+  Updating `C:\Users\jpche\.juliapro\JuliaPro_v1.2.0-1\environments\v1.2\Project.toml`
+  [91a5bcdd] + Plots v0.28.2
+  Updating `C:\Users\jpche\.juliapro\JuliaPro_v1.2.0-1\environments\v1.2\Manifest.toml`
+  [d38c429a] + Contour v0.5.1
+  [c87230d0] + FFMPEG v0.2.91
+  [28b8d3ca] + GR v0.44.90
+  [4d00f742] + GeometryTypes v0.7.6
+  [c8e1da08] + IterTools v1.3.0
+  [442fdcdd] + Measures v0.3.0
+  [77ba4419] + NaNMath v0.3.3
+  [ccf2f8ad] + PlotThemes v1.0.0
+  [995b91a9] + PlotUtils v0.6.1
+  [91a5bcdd] + Plots v0.28.2
+  [992d4aef] + Showoff v0.3.1
+  Building GR ────→ `C:\Users\jpche\.juliapro\JuliaPro_v1.2.0-1\packages\GR\mj6Yp\deps\build.log`
+  Building FFMPEG → `C:\Users\jpche\.juliapro\JuliaPro_v1.2.0-1\packages\FFMPEG\8bbhD\deps\build.log`
+  Building Plots ─→ `C:\Users\jpche\.juliapro\JuliaPro_v1.2.0-1\packages\Plots\2KhB2\deps\build.log`
+
+julia> Pkg.add("CategoricalArrays")
+ Resolving package versions...
+  Updating `C:\Users\jpche\.juliapro\JuliaPro_v1.2.0-1\environments\v1.2\Project.toml`
+  [324d7699] + CategoricalArrays v0.7.3
+  Updating `C:\Users\jpche\.juliapro\JuliaPro_v1.2.0-1\environments\v1.2\Manifest.toml`
+ [no changes]
+
+julia> Pkg.add("RegressionTables")
+ Resolving package versions...
+ Installed RegressionTables ─ v0.2.4
+ Installed GLM ────────────── v1.3.5
+ Installed Formatting ─────── v0.4.1
+  Updating `C:\Users\jpche\.juliapro\JuliaPro_v1.2.0-1\environments\v1.2\Project.toml`
+  [d519eb52] + RegressionTables v0.2.4
+  Updating `C:\Users\jpche\.juliapro\JuliaPro_v1.2.0-1\environments\v1.2\Manifest.toml`
+  [59287772] + Formatting v0.4.1
+  [38e38edf] + GLM v1.3.5
+  [d519eb52] + RegressionTables v0.2.4
+
+[ Info: Precompiling Query [1a8c2f83-1ff3-5112-b086-8aa67b057ba1]
+[ Info: Precompiling Plots [91a5bcdd-55d7-5caf-9e0b-520d859cae80]
+[ Info: Precompiling FixedEffects [c8885935-8500-56a7-9867-7708b20db0eb]
+[ Info: CUDAnative.jl failed to initialized, GPU functionality unavailable (set JULIA_CUDA_SILENT or JULIA_CUDA_VERBOSE to silence or expand this message)
+[ Info: Precompiling FixedEffectModels [9d5cd8c9-2029-5cab-9928-427838db53e3]
+[ Info: Precompiling RegressionTables [d519eb52-b820-54da-95a6-98e1306fdade]
+
+-------------------------------------------------------------------------------------------------
+                                                     fatality_rate
+                      ---------------------------------------------------------------------------
+                           (1)       (2)       (3)         (4)        (5)         (6)         (7)
+-------------------------------------------------------------------------------------------------
+(Intercept)           1.853***
+                       (0.044)
+beertax               0.365***   -0.656*    -0.640      -0.447     -0.690      -0.458    -0.924**
+                       (0.062)   (0.292)   (0.358)     (0.298)    (0.352)     (0.307)     (0.342)
+drinkagec: [18, 19)                                     -0.004      0.090                   0.150
+                                                       (0.067)    (0.077)                 (0.149)
+drinkagec: [19, 20)                                     -0.050      0.024                   0.048
+                                                       (0.058)    (0.061)                 (0.120)
+drinkagec: [20, 21)                                   0.000***   0.000***                0.000***
+                                                         (NaN)      (NaN)                   (NaN)
+drinkagec: [21, 22]                                     -0.032      0.100                   0.112
+                                                       (0.051)    (0.056)                 (0.124)
+punish                                                   0.038      0.085       0.039       0.088
+                                                       (0.103)    (0.112)     (0.103)     (0.164)
+miles                                                    0.000      0.000       0.000      0.000*
+                                                       (0.000)    (0.000)     (0.000)     (0.000)
+unemp                                                -0.063***              -0.063***   -0.091***
+log(income)                                            1.816**                1.788**       0.997
+                                                       (0.637)                (0.644)     (0.680)
+drinkage                                                                       -0.002
+                                                                              (0.021)
+-------------------------------------------------------------------------------------------------
+state                                Yes       Yes         Yes        Yes         Yes         Yes
+year                                           Yes         Yes        Yes         Yes         Yes
+-------------------------------------------------------------------------------------------------
+Estimator                  OLS       OLS       OLS         OLS        OLS         OLS         OLS
+-------------------------------------------------------------------------------------------------
+N                          336       336       336         336        336         336          96
+R2                       0.093     0.905     0.909       0.940      0.912       0.939       0.959
+-------------------------------------------------------------------------------------------------
+
+What was done differently?
+This time, after uninstalling and clearing all julia files, I first added the package FixedEffects and then the packages FixedEffectModels.
+A successful result was also achieved on my second laptop, where after first installing julia, I first added the package FixedEffects and then the packages FixedEffectModels.
+If I recall correctly, my first successful attempt on my first laptop was achieved after first adding the package FixedEffects and then the packages FixedEffectModels.
