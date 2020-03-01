@@ -1,0 +1,25 @@
+ERROR: LoadError: MethodError: no method matching FixedEffects.AbstractFixedEffectSolver{Float64}(::Array{FixedEffects.FixedEffect,1}, ::FillArrays.Ones{Float64,1,Tuple{Base.OneTo{Int64}}}, ::Type{Val{:lsmr}})
+Closest candidates are:
+  FixedEffects.AbstractFixedEffectSolver{Float64}(::Array{#s59,1} where #s59<:FixedEffects.FixedEffect, ::StatsBase.AbstractWeights, ::Type{Val{:lsmr}}) where T at C:\Users\jpche\.juliapro\JuliaPro_v1.2.0-1\packages\FixedEffects\NNa7q\src\FixedEffectSolvers\FixedEffectSolverLSMR.jl:12
+  FixedEffects.AbstractFixedEffectSolver{Float64}(::Array{#s59,1} where #s59<:FixedEffects.FixedEffect, ::AbstractArray{T,1} where T, ::Type{Val{:lsmr_parallel}}) where T at C:\Users\jpche\.juliapro\JuliaPro_v1.2.0-1\packages\FixedEffects\NNa7q\src\FixedEffectSolvers\FixedEffectSolverLSMRParallel.jl:19
+  FixedEffects.AbstractFixedEffectSolver{Float64}(::Array{#s59,1} where #s59<:FixedEffects.FixedEffect, ::StatsBase.AbstractWeights, ::Type{Val{:lsmr_cores}}) where T at C:\Users\jpche\.juliapro\JuliaPro_v1.2.0-1\packages\FixedEffects\NNa7q\src\FixedEffectSolvers\FixedEffectSolverLSMRParallel.jl:14
+  ...
+Stacktrace:
+ [1] #reg#40(::Nothing, ::Nothing, ::Int64, ::Dict{Symbol,Any}, ::Int64, ::Bool, ::Symbol, ::Bool, ::Bool, ::Float64, ::Nothing, ::Nothing, ::Nothing, ::typeof(FixedEffectModels.reg), ::DataFrames.DataFrame, ::StatsModels.FormulaTerm{StatsModels.Term,Tuple{StatsModels.Term,StatsModels.FunctionTerm{typeof(FixedEffectModels.fe),getfield(FixedEffectModels, Symbol("##77#78")),(:id,)}}}, ::FixedEffectModels.Vcov.SimpleCovariance) at C:\Users\jpche\.juliapro\JuliaPro_v1.2.0-1\packages\FixedEffectModels\1R7fm\src\fit.jl:160
+ [2] reg at C:\Users\jpche\.juliapro\JuliaPro_v1.2.0-1\packages\FixedEffectModels\1R7fm\src\fit.jl:47 [inlined] (repeats 2 times)
+ [3] top-level scope at C:\Users\jpche\.juliapro\JuliaPro_v1.2.0-1\packages\FixedEffectModels\1R7fm\src\FixedEffectModels.jl:64
+ [4] include at .\boot.jl:328 [inlined]
+ [5] include_relative(::Module, ::String) at .\loading.jl:1094
+ [6] include(::Module, ::String) at .\Base.jl:31
+ [7] top-level scope at none:2
+ [8] eval at .\boot.jl:330 [inlined]
+ [9] eval(::Expr) at .\client.jl:432
+ [10] top-level scope at .\none:3
+in expression starting at C:\Users\jpche\.juliapro\JuliaPro_v1.2.0-1\packages\FixedEffectModels\1R7fm\src\FixedEffectModels.jl:64
+ERROR: LoadError: Failed to precompile FixedEffectModels [9d5cd8c9-2029-5cab-9928-427838db53e3] to C:\Users\jpche\.juliapro\JuliaPro_v1.2.0-1\compiled\v1.2\FixedEffectModels\XFTup.ji.
+Stacktrace:
+ [1] compilecache(::Base.PkgId, ::String) at .\loading.jl:1253
+ [2] _require(::Base.PkgId) at .\loading.jl:1013
+ [3] require(::Base.PkgId) at .\loading.jl:911
+ [4] require(::Module, ::Symbol) at .\loading.jl:906
+in expression starting at C:\Users\jpche\Desktop\New folder (2)\10.5 Panel Data.jl:6
